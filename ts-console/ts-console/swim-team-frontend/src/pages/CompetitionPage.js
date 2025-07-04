@@ -1,0 +1,31 @@
+import React from 'react';
+import { Container, Box, Button, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CompetitionList from '../components/competitions/CompetitionList';
+import { useAuth } from '../context/AuthContext';
+
+const CompetitionPage = () => {
+  const { currentUser } = useAuth();
+  const canEdit = currentUser.role === 'ADMIN';
+
+  return (
+    <Container>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4">Competitions</Typography>
+        {canEdit && (
+          <Button 
+            component={Link} 
+            to="/competitions/new" 
+            variant="contained" 
+            color="primary"
+          >
+            Add New Competition
+          </Button>
+        )}
+      </Box>
+      <CompetitionList />
+    </Container>
+  );
+};
+
+export default CompetitionPage;
